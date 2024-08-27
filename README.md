@@ -42,5 +42,4 @@ Open your web browser and navigate to http://localhost:3000.
 You can open multiple tabs or use different devices to connect multiple clients.
 
 
-
-![Screenshot 2024-08-27 134638](https://github.com/user-attachments/assets/775cfd1b-cc43-49fe-a840-74cb2d4cb57a)
+![Game](https://github.com/user-attachments/assets/4c4c8011-6ba9-4209-922b-088a8bf1b7de)
