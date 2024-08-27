@@ -6,11 +6,11 @@ This project is a turn-based, chess-like game that allows two players to compete
 
 ## Features
 
-<!-- - **Real-time Multiplayer**: Two players can connect to the server and play against each other in real time.
+- **Real-time Multiplayer**: Two players can connect to the server and play against each other in real time.
 - **WebSocket Communication**: The game state is synchronized between clients using WebSocket for instant updates.
 - **Room-Based System**: Supports multiple game instances running simultaneously in different rooms.
 - **Customizable Characters**: Players can choose a combination of Pawns, Hero1, and Hero2 to create their team.
-- **Turn-Based Gameplay**: Players take turns to move their characters with each character having specific movement rules. -->
+- **Turn-Based Gameplay**: Players take turns to move their characters with each character having specific movement rules.
 
 ## Project Structure
 
