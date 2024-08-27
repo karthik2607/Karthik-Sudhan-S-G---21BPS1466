@@ -24,8 +24,8 @@ chess-like-game/
 
 
 Clone the Repository
-git clone https://github.com/your-username/chess-like-game.git
-cd chess-like-game
+git clone https://github.com/karthik2607/Karthik-Sudhan-S-G---21BPS1466.git
+
 
 Make sure you have Node.js installed. Then, run:
 npm install
