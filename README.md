@@ -41,4 +41,4 @@ Open the Game in a Browser
 Open your web browser and navigate to http://localhost:3000.
 You can open multiple tabs or use different devices to connect multiple clients.
 
-![image.png](image.png)
+![Alt text](D:\Chess game\image.png)
