@@ -1,72 +1,67 @@
-// public/client.js
-const board = document.getElementById('board');
-const currentTurn = document.getElementById('current-turn');
-const log = document.getElementById('log');
-const createRoomButton = document.getElementById('create-room');
-const joinRoomButton = document.getElementById('join-room');
-const roomCodeInput = document.getElementById('room-code');
+const ws = new WebSocket('ws://localhost:8080');
 
-let ws;
-let roomCode;
-let currentPlayer;
+let selectedChar = null;
 
-createRoomButton.addEventListener('click', () => {
-    ws = new WebSocket(`ws://${window.location.host}`);
-    ws.onopen = () => {
-        ws.send(JSON.stringify({ type: 'create_room' }));
-    };
-    ws.onmessage = handleServerMessage;
-});
+ws.onmessage = (message) => {
+    const { type, payload } = JSON.parse(message.data);
 
-joinRoomButton.addEventListener('click', () => {
-    roomCode = roomCodeInput.value;
-    ws = new WebSocket(`ws://${window.location.host}`);
-    ws.onopen = () => {
-        ws.send(JSON.stringify({ type: 'join_room', roomCode }));
-    };
-    ws.onmessage = handleServerMessage;
-});
-
-function handleServerMessage(event) {
-    const message = JSON.parse(event.data);
-    switch (message.type) {
-        case 'room_created':
-            roomCode = message.roomCode;
-            log.textContent = `Room created! Room Code: ${roomCode}`;
-            break;
-        case 'room_joined':
-            log.textContent = `Joined room: ${roomCode}`;
-            break;
-        case 'state_update':
-            currentPlayer = message.currentPlayer;
-            updateBoard(message.gameState);
-            currentTurn.textContent = `Turn: Player ${currentPlayer}`;
-            break;
-        case 'invalid_move':
-            alert(`Invalid move: ${message.reason}`);
-            break;
-        case 'game_over':
-            alert(`Game over! Winner: Player ${message.winner}`);
-            break;
+    if (type === 'init' || type === 'update') {
+        renderBoard(payload.board);
+        document.getElementById('currentPlayer').innerText = `Current Player: ${payload.currentPlayer}`;
+        renderMoveHistory(payload.moveHistory);
     }
-}
 
-function updateBoard(gameState) {
-    board.innerHTML = '';
-    gameState.forEach((row, rowIndex) => {
-        row.forEach((cell, colIndex) => {
-            const div = document.createElement('div');
-            div.className = 'cell';
-            div.textContent = cell ? cell : '';
-            div.addEventListener('click', () => handleCellClick(rowIndex, colIndex));
-            board.appendChild(div);
+    if (type === 'error') {
+        document.getElementById('errorMessage').innerText = payload.message;
+    }
+};
+
+function renderBoard(board) {
+    const boardDiv = document.getElementById('board');
+    boardDiv.innerHTML = ''; // Clear previous board
+    board.forEach(row => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'row';
+        row.forEach(cell => {
+            const cellDiv = document.createElement('div');
+            cellDiv.className = 'cell';
+            cellDiv.innerText = cell || ''; // Display cell content or empty string
+            if (cell) {
+                cellDiv.onclick = () => selectCharacter(cell); // Click to select a character
+            }
+            rowDiv.appendChild(cellDiv);
         });
+        boardDiv.appendChild(rowDiv);
     });
 }
 
-function handleCellClick(rowIndex, colIndex) {
-    const character = prompt('Enter your character and move (e.g., P1:L, H1:FR)');
-    if (character) {
-        ws.send(JSON.stringify({ type: 'player_move', roomCode, move: { character, direction: character.split(':')[1] } }));
-    }
+function selectCharacter(char) {
+    selectedChar = char;
+    document.querySelectorAll('.cell').forEach(cell => cell.classList.remove('selected'));
+    document.querySelectorAll('.cell').forEach(cell => {
+        if (cell.innerText === char) {
+            cell.classList.add('selected');
+        }
+    });
 }
+
+function renderMoveHistory(history) {
+    const historyDiv = document.getElementById('moveHistory');
+    historyDiv.innerHTML = '<h3>Move History</h3><ul>';
+    history.forEach(move => {
+        historyDiv.innerHTML += `<li>${move}</li>`;
+    });
+    historyDiv.innerHTML += '</ul>';
+}
+
+document.querySelectorAll('.move-options button').forEach(button => {
+    button.onclick = () => {
+        if (selectedChar) {
+            const move = button.id;
+            const playerName = document.getElementById('currentPlayer').innerText.split(': ')[1];
+            ws.send(JSON.stringify({ type: 'move', payload: { playerName, char: selectedChar, move } }));
+        } else {
+            document.getElementById('errorMessage').innerText = 'Select a character first!';
+        }
+    };
+});

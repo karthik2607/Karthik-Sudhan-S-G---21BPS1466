@@ -1,48 +1,36 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess-like Game</title>
+    <title>Advanced Chess-like Game</title>
     <style>
-        #board {
-            display: grid;
-            grid-template-columns: repeat(5, 60px);
-            grid-template-rows: repeat(5, 60px);
-            gap: 5px;
-        }
-        .cell {
-            width: 60px;
-            height: 60px;
-            border: 1px solid black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        #controls {
-            margin-top: 20px;
-        }
-        #log {
-            margin-top: 20px;
-        }
-        #current-turn {
-            font-size: 18px;
-            font-weight: bold;
-        }
+        body { font-family: Arial, sans-serif; background-color: #121212; color: white; text-align: center; }
+        #board { display: inline-block; margin-top: 20px; }
+        .row { display: flex; }
+        .cell { width: 50px; height: 50px; border: 1px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .selected { background-color: #4682B4; }
+        .move-options { margin-top: 10px; }
+        #moveHistory { text-align: left; margin: 20px auto; width: 300px; height: 100px; overflow-y: auto; border: 1px solid white; }
+        .error { color: red; }
     </style>
 </head>
 <body>
-    <div id="controls">
-        <button id="create-room">Create Room</button>
-        <input type="text" id="room-code" placeholder="Room Code">
-        <button id="join-room">Join Room</button>
-    </div>
-    <div id="current-turn">Turn: </div>
+    <h1>Advanced Chess-like Game</h1>
+    <div id="currentPlayer">Current Player: A</div>
     <div id="board"></div>
-    <div id="log"></div>
+    <div class="move-options">
+        <button id="F">F</button>
+        <button id="B">B</button>
+        <button id="L">L</button>
+        <button id="R">R</button>
+        <button id="FL">FL</button>
+        <button id="FR">FR</button>
+        <button id="BL">BL</button>
+        <button id="BR">BR</button>
+    </div>
+    <div id="moveHistory"><h3>Move History</h3></div>
+    <div id="errorMessage" class="error"></div>
 
     <script src="client.js"></script>
 </body>
