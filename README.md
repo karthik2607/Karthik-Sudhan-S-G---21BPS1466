@@ -43,4 +43,4 @@ You can open multiple tabs or use different devices to connect multiple clients.
 
 
 
-![alt text](image.png)
+![Screenshot 2024-08-27 134638](https://github.com/user-attachments/assets/bfe6630e-6d33-420a-b2b4-9ba19b1f5823)
