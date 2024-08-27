@@ -1,0 +1,49 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess-like Game</title>
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-template-rows: repeat(5, 60px);
+            gap: 5px;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #controls {
+            margin-top: 20px;
+        }
+        #log {
+            margin-top: 20px;
+        }
+        #current-turn {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button id="create-room">Create Room</button>
+        <input type="text" id="room-code" placeholder="Room Code">
+        <button id="join-room">Join Room</button>
+    </div>
+    <div id="current-turn">Turn: </div>
+    <div id="board"></div>
+    <div id="log"></div>
+
+    <script src="client.js"></script>
+</body>
+</html>
