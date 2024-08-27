@@ -43,4 +43,4 @@ You can open multiple tabs or use different devices to connect multiple clients.
 
 
 
-![Game](public\Screenshot 2024-08-27 134638.jpg.png)
+![Game](public\Game.png)
